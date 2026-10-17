@@ -1,0 +1,62 @@
+# Push this folder to GitHub and this builds both apps for Windows and Mac
+# (Actions tab -> latest run -> Artifacts). No Python needed on your PC.
+# Each build is launched once with --selftest; a broken build fails here
+# instead of on your computer.
+name: Build apps
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -r requirements.txt -r requirements-web.txt pyinstaller
+
+      - name: Build Windows apps
+        if: runner.os == 'Windows'
+        run: |
+          python -m PyInstaller --noconfirm --clean --windowed --onefile --add-data "assets;assets" --collect-data customtkinter --hidden-import PIL._tkinter_finder --name "PSAL Badminton" --icon assets\icon.ico main.py
+          python -m PyInstaller --noconfirm --clean --windowed --onefile --add-data "assets;assets" --collect-data customtkinter --hidden-import PIL._tkinter_finder --name "PSAL Badminton Manager" --icon assets\icon_manager.ico manager_main.py
+          python -m PyInstaller --noconfirm --clean --onefile --console --name "PSAL Badminton Server" --icon assets\icon.ico --add-data "web;web" --exclude-module customtkinter --exclude-module tkinter --exclude-module PIL web_server.py
+      - name: Self-test Windows apps
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          foreach ($a in @("PSAL Badminton", "PSAL Badminton Manager")) {
+            $p = Start-Process -FilePath "dist\$a.exe" -ArgumentList "--selftest" -Wait -PassThru
+            Get-Content "$env:TEMP\psal_badminton_selftest_*.txt"
+            if ($p.ExitCode -ne 0) { exit 1 }
+          }
+          & "dist\PSAL Badminton Server.exe" --selftest
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+      - uses: actions/upload-artifact@v4
+        if: runner.os == 'Windows'
+        with:
+          name: PSAL-Badminton-Windows
+          path: dist/*.exe
+
+      - name: Build Mac apps
+        if: runner.os == 'macOS'
+        run: |
+          python -m PyInstaller --noconfirm --clean --windowed --add-data "assets:assets" --collect-data customtkinter --hidden-import PIL._tkinter_finder --name "PSAL Badminton" --icon assets/icon.png --osx-bundle-identifier org.psal.badminton main.py
+          python -m PyInstaller --noconfirm --clean --windowed --add-data "assets:assets" --collect-data customtkinter --hidden-import PIL._tkinter_finder --name "PSAL Badminton Manager" --icon assets/icon_manager.png --osx-bundle-identifier org.psal.badminton.manager manager_main.py
+      - name: Self-test Mac apps
+        if: runner.os == 'macOS'
+        run: |
+          "dist/PSAL Badminton.app/Contents/MacOS/PSAL Badminton" --selftest
+          "dist/PSAL Badminton Manager.app/Contents/MacOS/PSAL Badminton Manager" --selftest
+          cd dist && ditto -c -k --keepParent "PSAL Badminton.app" PSAL-Badminton-Mac.zip && ditto -c -k --keepParent "PSAL Badminton Manager.app" PSAL-Badminton-Manager-Mac.zip
+      - uses: actions/upload-artifact@v4
+        if: runner.os == 'macOS'
+        with:
+          name: PSAL-Badminton-Mac
+          path: dist/*.zip

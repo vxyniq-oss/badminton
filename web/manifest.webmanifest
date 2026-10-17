@@ -1,0 +1,16 @@
+{
+  "name": "PSAL Badminton",
+  "short_name": "Badminton",
+  "description": "Team points, rank-up matches, quizzes and training for the badminton team.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0d1015",
+  "theme_color": "#0d1015",
+  "icons": [
+    {"src": "/icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "/icon-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}

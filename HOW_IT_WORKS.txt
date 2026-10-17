@@ -1,0 +1,222 @@
+=====================================================================
+  PSAL BADMINTON — HOW EVERYTHING WORKS (the simple version)
+=====================================================================
+
+WHAT IT IS
+----------
+An app that tracks points, ranks and training for the badminton team.
+It comes 3 ways — all share the same data:
+
+  * The WEBSITE   - for phones, tablets and computers (runs on your PC)
+  * Team app      - desktop app (blue) for players and coaches
+  * Manager app   - desktop app (purple) for managers and coaches
+
+Most people will just use the website.
+
+
+WHO CAN DO WHAT
+---------------
+  COACH    - everything (roster, lineup, points, settings, ranks...)
+  MANAGER  - matches, practice, scrimmages, rank-up matches,
+             videos & quizzes, 1st singles training, notes
+  PLAYER   - see their points & rank, request a rank-up match,
+             watch training videos, take quizzes, see the leaderboard
+
+
+HOW TO SIGN IN
+--------------
+  Players:   tap PLAYER -> type the team code -> pick your name
+             -> type your PIN. (First time: you make your own PIN,
+             4 to 8 numbers.) No license key needed.
+             5 wrong PINs = locked for a minute (longer if it keeps happening).
+             Forgot your PIN? The coach can reset it.
+
+  Coaches & managers: tap COACH / MANAGER and sign in with KeyAuth.
+             Coach keys = level 3 ("Coach"), manager keys = level 2 ("Managers").
+
+
+=====================================================================
+  POINTS
+=====================================================================
+Everyone starts with 100 points. Points can't go below 0.
+
+  PSAL MATCHES (vs other schools)
+    1st / 2nd / 3rd Singles win ......... +60 / +50 / +40
+    1st / 2nd Doubles win ................ +45 / +40 (each partner)
+    Played but lost ...................... +10  (showing up counts)
+    Team wins the match .................. +10 bonus for everyone who played
+
+  PRACTICE
+    Showed up ............................ +10
+    Absent, no excuse .................... -15
+    Absent WITH an excuse (reason typed) .   0
+
+  SCRIMMAGES (practice games vs teammates) - skill-based, see below
+    Win  ................................. about +15
+    Lose ................................. about -10
+
+  CHALLENGE MATCHES (for a lineup spot) - skill-based, see below
+    Win .................................. about +30
+    Lose ................................. +5  (for stepping up)
+    If you beat someone in a higher spot, you TAKE their spot.
+
+  EXTRA POINTS (training videos)
+    Pass a video quiz .................... +15 Beginner / +20 Intermediate / +30 Expert
+    Watch an optional training video ..... +5  Beginner / +10 Intermediate / +15 Expert
+    Caught skipping a video .............. -10 and that video gives nothing
+
+  The coach can change every number in Settings.
+
+
+=====================================================================
+  SKILL-BASED POINTS (like Valorant)
+=====================================================================
+In Valorant you get more RR for beating better players and lose more
+for losing to worse ones. Scrimmages and challenges work the same way.
+
+  * Every player has a SKILL RATING (like Valorant's hidden MMR).
+    It starts at 1000.
+  * Win  -> it goes up.  Lose -> it goes down.
+  * An even game moves it about 16. Upsets move it more.
+  * The app uses the two skill ratings to work out each side's
+    WIN CHANCE, and that decides how many points the game is worth:
+
+      Beat a STRONGER player  -> MORE points   (you were the underdog)
+      Beat a WEAKER player    -> FEWER points  (you were expected to win)
+      Lose to a STRONGER one  -> lose LESS
+      Lose to a WEAKER one    -> lose MORE
+
+  REAL EXAMPLES (scrimmage, normal values +15 / -10):
+
+    Skill gap   Stronger player's    If the stronger     If the weaker
+                win chance           player wins         player wins (upset)
+    ---------   ------------------   -----------------   -------------------
+    even        50%                  +15 / -10           +15 / -10
+    100         64%                  +11 / -7            +19 / -13
+    200         76%                  +7  / -5            +23 / -15
+    400         91%                  +4  / -3            +27 / -18
+
+    Challenge example (gap 200): an upset win is worth +46,
+    the favorite winning is worth only +14.
+
+  * Before you save a scrimmage or challenge, the app shows each
+    side's win chance and exactly what each result is worth.
+  * DOUBLES: each side's rating is the average of the two partners.
+  * PSAL matches vs other schools DON'T use this (other schools
+    don't have ratings here) - they use the fixed position points.
+  * Players see their own skill rating; coaches & managers see everyone's.
+  * Undo a scrimmage/challenge and the ratings fix themselves too.
+  * New season: ratings go halfway back to 1000 (like a new Valorant act).
+  * Coach settings: K = how fast ratings move (32 normal, 0 = turn it OFF),
+    and the smallest/biggest a game can be worth (25% to 200% of normal).
+
+
+=====================================================================
+  RANKS & RANK-UP MATCHES
+=====================================================================
+  Bronze -> Silver -> Gold -> Platinum -> Diamond -> Champion -> Legend
+
+  Every 500 points you QUALIFY for the next rank:
+    500 = Silver match, 1000 = Gold match, 1500 = Platinum, and so on.
+
+  Hitting the points does NOT rank you up by itself. You have to win
+  a RANK-UP MATCH:
+
+    1. Your Home screen says "You qualify!" -> tap REQUEST RANK-UP MATCH
+       and pick a manager (they get a Discord ping).
+    2. The manager schedules the match.
+    3. Win it  -> you rank up.
+       Lose it -> keep training and request again.
+
+  Managers and coaches can also move someone up or down a rank by hand
+  (they have to type a reason, and it's saved in the history).
+
+
+=====================================================================
+  PRACTICE, SCRIMMAGES, CHALLENGES, MATCHES
+=====================================================================
+  ATTENDANCE: mark each player Present / Absent / Excused (type the
+    reason). Saving the same day again REPLACES it - no double points.
+  SCRIMMAGE: pick the players (singles or doubles), who won, save.
+  CHALLENGE: a player challenges someone in the lineup. Win = take
+    their spot if it's higher.
+  PSAL MATCH: pick date, school, players per spot, win/loss. Points
+    are given out automatically. Deleting a match takes them back.
+  LINEUP: 1st-3rd Singles + 1st-2nd Doubles. "Auto-fill by points"
+    puts the highest points at 1st Singles.
+
+
+=====================================================================
+  VIDEOS & QUIZZES (extra points)
+=====================================================================
+  Two sections, each split into BEGINNER / INTERMEDIATE / EXPERT,
+  topics: Footwork, Shots, Grip, Plyometrics (+ Rules & Strategy quizzes).
+
+  VIDEO QUIZZES: watch the whole video -> the quiz unlocks.
+    Need 70% to pass. 3 tries. Coach/manager can give tries back.
+  OPTIONAL TRAINING: just watch the whole video for points. No quiz.
+
+  NO SKIPPING:
+    * No seek bar, speed locked at 1x.
+    * The app checks every 2 seconds that the video moved at
+      real-time speed. Jumping ahead or speeding up = caught.
+    * Caught = -10 points and that video gives nothing.
+      (A coach/manager can let you re-watch it; the -10 stays.)
+    * Pausing or switching tabs is FINE - the video just pauses.
+
+
+=====================================================================
+  OTHER SECTIONS
+=====================================================================
+  1ST SINGLES TRAINING - managers log training sessions with the #1
+    player (minutes, effort, focus, skill ratings). It's a separate
+    "training points" track, so it doesn't change team points.
+  IMPROVEMENT NOTES - write who needs to work on what (footwork,
+    smash, attendance...) with a priority, and send it to the
+    managers' Discord channel.
+  LEADERBOARD - everyone ranked by points, top 3 on a podium.
+  ACTIVITY - every change, who made it and when.
+
+
+=====================================================================
+  RUNNING THE WEBSITE ON YOUR PC
+=====================================================================
+  1. Double-click start_server.bat. Keep that window open.
+  2. Allow it through Windows Firewall (Private networks).
+  3. Phones on your Wi-Fi can open the address it shows.
+  4. For phones ANYWHERE: run start_public_link.bat - it gives a free
+     https link (the link changes each time you start it).
+     For a permanent link you need a domain (about $10/year) -
+     the steps are in WEB_SETUP.md.
+  5. Set sleep to "Never" and add start_server.bat to Windows startup
+     so the site stays up.
+
+  First time (coach): sign in -> Settings -> set a TEAM CODE ->
+  Roster -> add players -> give the team the link + code.
+
+  On a phone, add it to the home screen so it opens like an app:
+    iPhone: Safari -> Share -> Add to Home Screen
+    Android: Chrome -> menu -> Add to Home screen / Install app
+
+
+=====================================================================
+  BACKUPS & NEW SEASONS
+=====================================================================
+  * The website saves a copy of all data every day (keeps 30 days).
+  * Coach can download a backup any time: Settings -> Data & backups.
+  * NEW SEASON (Settings): points go back to 100, ranks to Bronze,
+    skill ratings halfway back to 1000. The old season is saved to a
+    file. Roster, lineup and videos stay.
+
+
+=====================================================================
+  QUICK FIXES
+=====================================================================
+  Forgot PIN ............ coach: Roster -> player -> Edit -> Reset PIN
+  Can't see Player tab .. coach sets a team code in Settings
+  "HWID" error .......... turn off the HWID lock in your KeyAuth app
+  Video "can't count" ... that YouTube video blocks embedding - swap it
+  Phone can't connect ... same Wi-Fi + firewall allowed, or use the
+                          public link (school Wi-Fi often blocks it)
+
+  More details: README.md (apps) and WEB_SETUP.md (website).
